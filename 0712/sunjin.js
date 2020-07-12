@@ -11,20 +11,29 @@ function solution(board, moves) {
     newBoard[i] = temp;
   }
 
+  console.log(newBoard)
 
   moves.forEach((move) => {
-    newBoard[move - 1].forEach((col) => {
-      if (col != 0) {
-        prizeBox.push(col);
-        col = 0;
-      }
-    });
+    let y =move-1;
+    console.log(y)
+    var array = newBoard[y]
+    
+    for (let index = 0; index < array.length; index++) {
+      if (array[index] !== 0) {
+        prizeBox.push(array[index]);
+        array[index] = 0;
+        newBoard[y]=array;
+        break;//정식이의 어드바이스
+    }
+  }
   });
+
+  console.log(prizeBox)
   function popping(box) {
-    for (let index = 0; index+1 < box.length; index++) {
+    for (let index = 0; index < box.length; index++) {
       var toy = box[index];
-      var toy2 = box[index]; //
-      if (toy === toy2) {
+      var toy2 = box[index+1]; //이렇게 해도 된다
+      if (toy === toy2) {//undefined일때 걸러짐
         box.splice(index, 2);
         answer++;
         popping(box);
@@ -35,5 +44,3 @@ function solution(board, moves) {
 
   return answer * 2;
 }
-
-solution([[0, 0, 0, 0, 0], [0, 0, 1, 0, 3], [0, 2, 5, 0, 1], [4, 2, 4, 4, 2], [3, 5, 1, 3, 1]], [1, 5, 3, 5, 1, 2, 1, 4])
